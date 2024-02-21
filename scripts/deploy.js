@@ -28,7 +28,7 @@ main()
 
 
 
-  //In the terminal write construstor give pass number: 21/02/2024
+  //In the terminal write constructor given 6 Argument: 21/02/2024
 
 
   // npx hardhat verify --network sepolia  0xe9D544639A2729789fFdaC5D226fcD9c80C1dD14 "SohailToken", "ST", "18", "10000", "0xcd3b766ccdd6ae721141f452c550ca635964ce71", "0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2"
