@@ -10,47 +10,51 @@
                                                                                                    
 
 */
+//SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
 
-// SPDX-License-Identifier: MIT
-// OpenZeppelin Contracts (last updated v5.0.0) (utils/math/SignedMath.sol)
+import {Ownable} from "contracts/@openzeppelin/contracts/access/Ownable.sol";
+import {Strings} from "contracts/@openzeppelin/contracts/utils/Strings.sol";
+import {ERC404} from "../ERC404.sol";
+import {ERC404MerkleClaim} from "../extensions/ERC404MerkleClaim.sol";
 
-pragma solidity ^0.8.20;
+contract ExampleERC404 is Ownable, ERC404, ERC404MerkleClaim {
+  constructor(
+    string memory name_,
+    string memory symbol_,
+    uint8 decimals_,
+    uint256 maxTotalSupplyERC721_,
+    address initialOwner_,
+    address initialMintRecipient_
+  ) ERC404(name_, symbol_, decimals_) Ownable(initialOwner_) {
+    // Do not mint the ERC721s to the initial owner, as it's a waste of gas.
+    _setERC721TransferExempt(initialMintRecipient_, true);
+    _mintERC20(initialMintRecipient_, maxTotalSupplyERC721_ * units, false);
+  }
 
-/**
- * @dev Standard signed math utilities missing in the Solidity language.
- */
-library SignedMath {
-    /**
-     * @dev Returns the largest of two signed numbers.
-     */
-    function max(int256 a, int256 b) internal pure returns (int256) {
-        return a > b ? a : b;
-    }
+  function tokenURI(uint256 id_) public pure override returns (string memory) {
+    return string.concat("https://example.com/token/", Strings.toString(id_));
+  }
 
-    /**
-     * @dev Returns the smallest of two signed numbers.
-     */
-    function min(int256 a, int256 b) internal pure returns (int256) {
-        return a < b ? a : b;
-    }
+  function airdropMint(
+    bytes32[] memory proof_,
+    uint256 value_
+  ) public override whenAirdropIsOpen {
+    super.airdropMint(proof_, value_);
+    _mintERC20(msg.sender, value_, true);
+  }
 
-    /**
-     * @dev Returns the average of two signed numbers without overflow.
-     * The result is rounded towards zero.
-     */
-    function average(int256 a, int256 b) internal pure returns (int256) {
-        // Formula from the book "Hacker's Delight"
-        int256 x = (a & b) + ((a ^ b) >> 1);
-        return x + (int256(uint256(x) >> 255) & (a ^ b));
-    }
+  function setAirdropMerkleRoot(bytes32 airdropMerkleRoot_) external onlyOwner {
+    _setAirdropMerkleRoot(airdropMerkleRoot_);
+  }
 
-    /**
-     * @dev Returns the absolute unsigned value of a signed value.
-     */
-    function abs(int256 n) internal pure returns (uint256) {
-        unchecked {
-            // must be unchecked in order to support `n = type(int256).min`
-            return uint256(n >= 0 ? n : -n);
-        }
-    }
+  function toggleAirdropIsOpen() external onlyOwner {
+    _toggleAirdropIsOpen();
+  }
+
+  function setERC721TransferExempt(address account_, bool value_) external onlyOwner {
+    _setERC721TransferExempt(account_, value_);
+  }
 }
+
+

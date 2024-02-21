@@ -10,47 +10,28 @@
                                                                                                    
 
 */
-
 // SPDX-License-Identifier: MIT
-// OpenZeppelin Contracts (last updated v5.0.0) (utils/math/SignedMath.sol)
+// OpenZeppelin Contracts (last updated v5.0.0) (utils/introspection/IERC165.sol)
 
 pragma solidity ^0.8.20;
 
 /**
- * @dev Standard signed math utilities missing in the Solidity language.
+ * @dev Interface of the ERC-165 standard, as defined in the
+ * https://eips.ethereum.org/EIPS/eip-165[ERC].
+ *
+ * Implementers can declare support of contract interfaces, which can then be
+ * queried by others ({ERC165Checker}).
+ *
+ * For an implementation, see {ERC165}.
  */
-library SignedMath {
-    /**
-     * @dev Returns the largest of two signed numbers.
-     */
-    function max(int256 a, int256 b) internal pure returns (int256) {
-        return a > b ? a : b;
-    }
-
-    /**
-     * @dev Returns the smallest of two signed numbers.
-     */
-    function min(int256 a, int256 b) internal pure returns (int256) {
-        return a < b ? a : b;
-    }
-
-    /**
-     * @dev Returns the average of two signed numbers without overflow.
-     * The result is rounded towards zero.
-     */
-    function average(int256 a, int256 b) internal pure returns (int256) {
-        // Formula from the book "Hacker's Delight"
-        int256 x = (a & b) + ((a ^ b) >> 1);
-        return x + (int256(uint256(x) >> 255) & (a ^ b));
-    }
-
-    /**
-     * @dev Returns the absolute unsigned value of a signed value.
-     */
-    function abs(int256 n) internal pure returns (uint256) {
-        unchecked {
-            // must be unchecked in order to support `n = type(int256).min`
-            return uint256(n >= 0 ? n : -n);
-        }
-    }
+interface IERC165 {
+  /**
+   * @dev Returns true if this contract implements the interface defined by
+   * `interfaceId`. See the corresponding
+   * https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[ERC section]
+   * to learn more about how these ids are created.
+   *
+   * This function call must use less than 30 000 gas.
+   */
+  function supportsInterface(bytes4 interfaceId) external view returns (bool);
 }

@@ -7,16 +7,14 @@
 ╚════██║██║   ██║██╔══██║██╔══██║██║██║                 ██╔══██║██╔══██║██║╚██╔╝██║██╔══╝  ██║  ██║
 ███████║╚██████╔╝██║  ██║██║  ██║██║███████╗            ██║  ██║██║  ██║██║ ╚═╝ ██║███████╗██████╔╝
 ╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚══════╝            ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝╚═════╝ 
+                                                                                                   
 
-
-
-Find this contract:
 */
 
 // SPDX-License-Identifier: MIT
-// OpenZeppelin Contracts v4.4.1 (utils/Context.sol)
+// OpenZeppelin Contracts (last updated v5.0.1) (utils/Context.sol)
 
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.20;
 
 /**
  * @dev Provides information about the current execution context, including the
@@ -35,5 +33,9 @@ abstract contract Context {
 
     function _msgData() internal view virtual returns (bytes calldata) {
         return msg.data;
+    }
+
+    function _contextSuffixLength() internal view virtual returns (uint256) {
+        return 0;
     }
 }

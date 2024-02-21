@@ -4,24 +4,21 @@ require("@nomiclabs/hardhat-etherscan");
 require("dotenv").config();
 
 module.exports = {
-  solidity: "0.8.4",
+  solidity: "0.8.20",
   networks: {
     sepolia: {
       url: "https://sepolia.infura.io/v3/64d5a638c6834dddb6a59aa830e93f09",
       chainId: 11155111,
-      accounts: [
-        `here is your Metamask account Private key put here`,
-      ], 
+      accounts: [`Your Metamask wallet Private key here`],
     },
   },
 
   // 1:Etherscan Explore
   etherscan: {
     apiKey: {
-      sepolia: "Your Etherescan Explore key",
+      sepolia: "Your Metamask wallet api key",
     },
   },
-
 
   mocha: {
     timeout: 20000,
